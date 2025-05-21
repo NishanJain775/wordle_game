@@ -1,4 +1,4 @@
-# Wordle-Game [[link]](https://wordle-game-by-nj.netlify.app/)
+# Wordle-Game [[link]](https://wordlegame123456.netlify.app/)
 # Project Layout
 <div>
 <img width="250" alt="6" src="https://user-images.githubusercontent.com/85639730/176823428-37b9a4e7-29d8-42f5-ae9f-288593544272.PNG">
