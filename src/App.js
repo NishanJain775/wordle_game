@@ -6,7 +6,11 @@ function App() {
   const [error, setError] = useState(null)
   
   const getNewWord = () => {
-    fetch('http://localhost:3001/solutions')
+    const API_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3001'
+      : 'https://wordle-game-backend.onrender.com';
+
+    fetch(`${API_URL}/solutions`)
       .then(res => {
         if (!res.ok) {
           throw new Error('Failed to fetch words')
