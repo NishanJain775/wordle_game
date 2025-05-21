@@ -8,6 +8,15 @@ const useWordle = (solution) => {
   const [isCorrect, setIsCorrect] = useState(false)
   const [usedKeys, setUsedKeys] = useState({}) // {a: 'grey', b: 'green', c: 'yellow'} etc
 
+  const resetGame = () => {
+    setTurn(0)
+    setCurrentGuess('')
+    setGuesses([...Array(6)])
+    setHistory([])
+    setIsCorrect(false)
+    setUsedKeys({})
+  }
+
   // format a guess into an array of letter objects 
   // e.g. [{key: 'a', color: 'yellow'}]
   const formatGuess = () => {
@@ -77,39 +86,58 @@ const useWordle = (solution) => {
   }
 
   // handle keyup event & track current guess
-  // if user presses enter, add the new guess
   const handleKeyup = ({ key }) => {
     if (key === 'Enter') {
-      // only add guess if turn is less than 5
-      if (turn > 5) {
-        console.log('you used all your guesses!')
-        return
-      }
-      // do not allow duplicate words
-      if (history.includes(currentGuess)) {
-        console.log('you already tried that word.')
-        return
-      }
-      // check word is 5 chars
-      if (currentGuess.length !== 5) {
-        console.log('word must be 5 chars.')
-        return
-      }
-      const formatted = formatGuess()
-      addNewGuess(formatted)
-    }
-    if (key === 'Backspace') {
-      setCurrentGuess(prev => prev.slice(0, -1))
-      return
-    }
-    if (/^[A-Za-z]$/.test(key)) {
-      if (currentGuess.length < 5) {
-        setCurrentGuess(prev => prev + key)
-      }
+      submitGuess()
+    } else if (key === 'Backspace') {
+      deleteLetter()
+    } else if (/^[A-Za-z]$/.test(key)) {
+      addLetter(key)
     }
   }
 
-  return {turn, currentGuess, guesses, isCorrect, usedKeys, handleKeyup}
+  const addLetter = (letter) => {
+    if (currentGuess.length < 5) {
+      setCurrentGuess(prev => prev + letter.toLowerCase())
+    }
+  }
+
+  const deleteLetter = () => {
+    setCurrentGuess(prev => prev.slice(0, -1))
+  }
+
+  const submitGuess = () => {
+    // only add guess if turn is less than 5
+    if (turn > 5) {
+      console.log('you used all your guesses!')
+      return
+    }
+    // do not allow duplicate words
+    if (history.includes(currentGuess)) {
+      console.log('you already tried that word.')
+      return
+    }
+    // check word is 5 chars
+    if (currentGuess.length !== 5) {
+      console.log('word must be 5 chars.')
+      return
+    }
+    const formatted = formatGuess()
+    addNewGuess(formatted)
+  }
+
+  return {
+    turn, 
+    currentGuess, 
+    guesses, 
+    isCorrect, 
+    usedKeys, 
+    handleKeyup,
+    resetGame,
+    addLetter,
+    deleteLetter,
+    submitGuess
+  }
 }
 
 export default useWordle

@@ -1,49 +1,69 @@
 body {
   text-align: center;
-  font-size: 1em;
+  font-size: 16px;
   font-family: verdana;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+* {
+  box-sizing: border-box;
+}
+
 h1 {
-  font-size: 1.2em;
+  font-size: clamp(1.2rem, 4vw, 2rem);
   padding: 20px 0;
   border-bottom: 1px solid #eee;
-  margin: 0 0 30px 0;
+  margin: 0 0 20px 0;
   color: #333;
 }
+
+.App {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
 /* rows */
 .row {
   text-align: center;
   display: flex;
   justify-content: center;
+  margin-bottom: 5px;
 }
+
 .row > div {
-  display: block;
-  width: 60px;
-  height: 60px;
-  border: 1px solid #bbb;
-  margin: 4px;
-  text-align: center;
-  line-height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(40px, 12vw, 60px);
+  height: clamp(40px, 12vw, 60px);
+  border: 2px solid #bbb;
+  margin: 2px;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 2.5em;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
 }
+
 .row > div.green {
   --background: #5ac85a;
   --border-color: #5ac85a;
   animation: flip 0.5s ease forwards;
 }
+
 .row > div.grey {
   --background: #a1a1a1;
   --border-color: #a1a1a1;
   animation: flip 0.6s ease forwards;
 }
+
 .row > div.yellow {
   --background: #e2cc68;
   --border-color: #e2cc68;
   animation: flip 0.5s ease forwards;
 }
+
 .row > div:nth-child(2) {
   animation-delay: 0.2s;
 }
@@ -56,62 +76,136 @@ h1 {
 .row > div:nth-child(5) {
   animation-delay: 0.8s;
 }
+
 .row.current > div.filled {
   animation: bounce 0.2s ease-in-out forwards;
 }
+
+/* keypad */
 .keypad {
-  max-width: 500px;
+  max-width: min(100%, 600px);
   margin: 20px auto;
+  padding: 10px;
 }
-.keypad > div {
-  margin: 5px;
-  width: 40px;
-  height: 50px;
+
+.keypad-row {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+  gap: 4px;
+}
+
+.keypad-row > div {
+  margin: 2px;
+  width: clamp(25px, 8vw, 40px);
+  height: clamp(35px, 12vw, 50px);
   background: #eee;
-  display: inline-block;
-  border-radius: 6px;
-  line-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: clamp(0.7rem, 2.5vw, 1rem);
+  transition: all 0.3s ease;
+  user-select: none;
 }
-.keypad > div.green {
+
+.keypad-row > div.special-key {
+  width: clamp(40px, 15vw, 65px);
+  font-size: clamp(0.6rem, 2vw, 0.8rem);
+}
+
+@media (hover: hover) {
+  .keypad-row > div:hover {
+    transform: scale(1.1);
+    background: #ddd;
+  }
+}
+
+.keypad-row > div:active {
+  transform: scale(0.95);
+}
+
+.keypad-row > div.green {
   background: #5ac85a;
   color: #fff;
-  transition: all 0.3s ease-in;
 }
-.keypad > div.yellow {
+
+.keypad-row > div.yellow {
   background: #e2cc68;
   color: #fff;
-  transition: all 0.3s ease-in;
 }
-.keypad > div.grey {
+
+.keypad-row > div.grey {
   background: #a1a1a1;
   color: #fff;
-  transition: all 0.3s ease-in;
 }
+
+/* modal */
 .modal {
-  background: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.9);
   position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
-.modal div {
-  max-width: 480px;
+
+.modal > div {
+  width: min(90%, 480px);
   background: #fff;
-  padding: 40px;
+  padding: clamp(20px, 5vw, 40px);
   border-radius: 10px;
-  margin: 10% auto;
   box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
 }
+
+.modal h1 {
+  margin: 0;
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  padding: 0 0 15px 0;
+  border: none;
+}
+
 .modal .solution {
   color: #ff004c;
   font-weight: bold;
-  font-size: 0.8em;
+  font-size: clamp(1rem, 3vw, 1.2rem);
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin: 15px 0;
 }
 
-/* keyframe animations */
+.modal p {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  margin: 15px 0;
+}
+
+.modal .play-again {
+  background: #5ac85a;
+  border: none;
+  padding: clamp(8px, 3vw, 12px) clamp(16px, 5vw, 24px);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 20px;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  transition: background-color 0.3s ease;
+}
+
+@media (hover: hover) {
+  .modal .play-again:hover {
+    background: #4bb74b;
+  }
+}
+
+/* animations */
 @keyframes flip {
   0% {
     transform: rotateX(0);
@@ -147,5 +241,52 @@ h1 {
   100% {
     transform: scale(1);
     border-color: #333;
+  }
+}
+
+/* Media query for very small devices */
+@media screen and (max-width: 320px) {
+  .keypad-row > div {
+    margin: 1px;
+    width: clamp(20px, 7vw, 25px);
+    height: clamp(30px, 10vw, 35px);
+    font-size: 0.7rem;
+  }
+
+  .keypad-row > div.special-key {
+    width: clamp(35px, 12vw, 40px);
+    font-size: 0.6rem;
+  }
+
+  .row > div {
+    width: clamp(30px, 10vw, 40px);
+    height: clamp(30px, 10vw, 40px);
+    font-size: 1.2rem;
+  }
+}
+
+/* Media query for tablets and landscape phones */
+@media screen and (min-width: 768px) {
+  .App {
+    max-width: 90%;
+  }
+
+  .keypad {
+    margin: 30px auto;
+  }
+
+  .row > div {
+    margin: 4px;
+  }
+}
+
+/* Media query for larger screens */
+@media screen and (min-width: 1024px) {
+  .App {
+    max-width: 80%;
+  }
+
+  .keypad {
+    margin: 40px auto;
   }
 }
