@@ -20,6 +20,7 @@ export default function Wordle({ solution, handleNewGame }) {
     submitGuess
   } = useWordle(solution)
   const [showModal, setShowModal] = useState(false)
+  const [shake, setShake] = useState(false)
   
   useEffect(() => {
     window.addEventListener('keyup', handleKeyup)
@@ -48,19 +49,38 @@ export default function Wordle({ solution, handleNewGame }) {
 
   const handleKeypadClick = (key) => {
     if (key === 'Enter') {
+      if (currentGuess.length !== 5) {
+        setShake(true)
+        setTimeout(() => setShake(false), 500)
+        return
+      }
       submitGuess()
     } else if (key === 'Backspace') {
       deleteLetter()
     } else {
-      addLetter(key)
+      if (currentGuess.length < 5) {
+        addLetter(key)
+      }
     }
   }
 
   return (
     <div>
-      <Grid guesses={guesses} currentGuess={currentGuess} turn={turn} />
+      <Grid 
+        guesses={guesses} 
+        currentGuess={currentGuess} 
+        turn={turn} 
+        shake={shake}
+      />
       <Keypad usedKeys={usedKeys} handleClick={handleKeypadClick} />
-      {showModal && <Modal isCorrect={isCorrect} turn={turn} solution={solution} handlePlayAgain={handlePlayAgain} />}
+      {showModal && (
+        <Modal 
+          isCorrect={isCorrect} 
+          turn={turn} 
+          solution={solution} 
+          handlePlayAgain={handlePlayAgain}
+        />
+      )}
     </div>
   )
 }
