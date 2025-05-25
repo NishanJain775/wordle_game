@@ -27,7 +27,7 @@ export default function Keypad({ usedKeys, handleClick }) {
             return (
               <div 
                 key={key} 
-                className={`${color || ''} ${isSpecialKey ? 'special-key' : ''}`}
+                className={color || ''}
                 onClick={() => handleClick(key)}
               >
                 {key === 'Backspace' ? '⌫' : key}

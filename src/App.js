@@ -1,4 +1,7 @@
+import React from 'react'
 import { useEffect, useState } from 'react'
+import { ThemeProvider } from './contexts/ThemeContext'
+import ThemeToggle from './components/ThemeToggle'
 import Wordle from './components/Wordle'
 
 function App() {
@@ -43,12 +46,15 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h1>Wordle Game</h1>
-      {error && <div style={{ color: 'red', margin: '10px 0' }}>{error}</div>}
-      {solution && <Wordle solution={solution} handleNewGame={handleNewGame} />}
-      <p style={{ textAlign: 'center' }}> Copyright &copy; --Nishan Jain !!!</p>
-    </div>
+    <ThemeProvider>
+      <div className="App">
+        <ThemeToggle />
+        <h1>Wordle</h1>
+        {error && <div style={{ color: 'red', margin: '10px 0' }}>{error}</div>}
+        {solution && <Wordle solution={solution} handleNewGame={handleNewGame} />}
+        <p style={{ textAlign: 'center' }}> Copyright &copy; --Nishan Jain !!!</p>
+      </div>
+    </ThemeProvider>
   )
 }
 
