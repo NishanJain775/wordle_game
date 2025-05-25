@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { ThemeProvider } from './contexts/ThemeContext'
 import ThemeToggle from './components/ThemeToggle'
 import Wordle from './components/Wordle'
+import Rules from './components/Rules'
 
 function App() {
   const [solution, setSolution] = useState(null)
@@ -48,6 +49,7 @@ function App() {
   return (
     <ThemeProvider>
       <div className="App">
+        <Rules />
         <ThemeToggle />
         <h1>Wordle</h1>
         {error && <div style={{ color: 'red', margin: '10px 0' }}>{error}</div>}
